@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Cup Bingo — Card</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+</head>
+<body data-page="bingo">
+  <header class="topbar">
+    <a class="brand" href="/">World Cup Bingo</a>
+    <div id="score-pill" class="pill">0 pts</div>
+  </header>
+  <main class="wrap">
+    <div id="match-title" class="match-title muted">Loading…</div>
+    <div id="conn" class="conn muted"></div>
+    <div id="card" class="card-grid"></div>
+    <div class="actions">
+      <button id="share-btn" class="btn">Share</button>
+      <a class="btn secondary" href="/">Back to matches</a>
+    </div>
+    <div id="result" class="result hidden"></div>
+  </main>
+  <div id="toast" class="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

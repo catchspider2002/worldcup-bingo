@@ -1,0 +1,22 @@
+name = "worldcup-bingo"
+main = "src/worker.ts"
+compatibility_date = "2026-01-01"
+
+# Secret (never commit) — set with:
+#   wrangler secret put TXLINE_API_KEY
+# (No Claude API. No Container — real-time is handled by a Durable Object that polls
+#  TxLINE scores on an alarm and fan-outs to browsers over WebSocket.)
+
+# Frontend served from ./public; non-file paths (/api/*) fall through to the Worker.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# One MatchRoom per fixture: holds WebSocket clients + triggered categories, polls scores.
+[[durable_objects.bindings]]
+name = "MATCH_ROOM"
+class_name = "MatchRoom"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["MatchRoom"]
