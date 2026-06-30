@@ -1,4 +1,4 @@
-// WorldCup Bingo — Cloudflare Worker. Routes + static assets; real-time via MatchRoom DO.
+// WorldCup Bingo - Cloudflare Worker. Routes + static assets; real-time via MatchRoom DO.
 import { listFixtures } from './txline';
 import { generateCard } from './squares';
 export { MatchRoom } from './matchRoom';
@@ -34,7 +34,7 @@ export default {
     if (!path.startsWith('/api/')) return env.ASSETS.fetch(req);
 
     try {
-      // GET /api/matches — upcoming/live World Cup fixtures
+      // GET /api/matches - upcoming/live World Cup fixtures
       if (path === '/api/matches' && req.method === 'GET') {
         if (!env.TXLINE_API_KEY) return json({ fixtures: [], note: 'TXLINE_API_KEY not set' });
         const cid = url.searchParams.get('competitionId');
@@ -42,18 +42,18 @@ export default {
         return json({ fixtures });
       }
 
-      // GET /api/card/:fixtureId?u=userId — seeded 5x5 card
+      // GET /api/card/:fixtureId?u=userId - seeded 5x5 card
       let m = path.match(/^\/api\/card\/(\w+)$/);
       if (m && req.method === 'GET') {
         const userId = url.searchParams.get('u') || 'anon';
         return json({ fixtureId: m[1], cells: generateCard(m[1], userId) });
       }
 
-      // GET (WebSocket) /api/events/:fixtureId — live square checks
+      // GET (WebSocket) /api/events/:fixtureId - live square checks
       m = path.match(/^\/api\/events\/(\w+)$/);
       if (m) return room(env, m[1], '/events', req);
 
-      // POST /api/mock-event/:fixtureId { category, detail } — demo driver
+      // POST /api/mock-event/:fixtureId { category, detail } - demo driver
       m = path.match(/^\/api\/mock-event\/(\w+)$/);
       if (m && req.method === 'POST') return room(env, m[1], '/mock', req);
 

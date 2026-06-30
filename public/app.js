@@ -1,4 +1,4 @@
-// World Cup Bingo — frontend (home + card pages).
+// World Cup Bingo - frontend (home + card pages).
 const qs = (s, r = document) => r.querySelector(s);
 const api = (p, o) => fetch(p, o).then(async (r) => { const d = await r.json().catch(() => ({})); if (!r.ok) throw new Error(d.error || ('HTTP ' + r.status)); return d; });
 const param = (k) => new URLSearchParams(location.search).get(k);
@@ -14,7 +14,7 @@ async function initHome() {
   const host = qs('#fixtures');
   try {
     const { fixtures, note } = await api('/api/matches');
-    if (note) { host.innerHTML = `<p class="muted">${esc(note)} — set it to list live fixtures. You can still open a card by fixture id: <code>/bingo.html?match=FIXTURE_ID</code>.</p>`; return; }
+    if (note) { host.innerHTML = `<p class="muted">${esc(note)} - set it to list live fixtures. You can still open a card by fixture id: <code>/bingo.html?match=FIXTURE_ID</code>.</p>`; return; }
     if (!fixtures.length) { host.innerHTML = '<p class="muted">No World Cup fixtures available right now.</p>'; return; }
     fixtures.sort((a, b) => a.startTime - b.startTime);
     host.innerHTML = fixtures.map((f) => {
@@ -73,7 +73,7 @@ async function initBingo() {
     checked.add(id);
     el.classList.add('checked', 'pop');
     setTimeout(() => el.classList.remove('pop'), 200);
-    toast(`✓ ${el.textContent}${detail ? ' — ' + detail : ''}`);
+    toast(`✓ ${el.textContent}${detail ? ' - ' + detail : ''}`);
     detectBingo();
     updateScore();
   }

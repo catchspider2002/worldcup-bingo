@@ -1,4 +1,4 @@
-// WorldCup Bingo — square pool, seeded card generation, and event→category mapping.
+// WorldCup Bingo - square pool, seeded card generation, and event→category mapping.
 
 export interface Square { category: string; label: string; }
 
@@ -17,7 +17,7 @@ export const POOL: (Square & { auto?: boolean })[] = [
   { category: 'two_reds', label: 'Two red cards', auto: true },
   { category: 'half_time', label: 'Reach half time', auto: true },
   { category: 'full_time', label: 'Final whistle', auto: true },
-  { category: 'nil_nil', label: 'Match ends 0–0', auto: true },
+  { category: 'nil_nil', label: 'Match ends 0-0', auto: true },
   { category: 'extra_time', label: 'Goes to extra time', auto: true },
   { category: 'penalty_shootout', label: 'Penalty shootout', auto: true },
   // demo / mock-triggered (not derivable from counts alone)

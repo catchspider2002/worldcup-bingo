@@ -1,4 +1,4 @@
-# WorldCup Bingo — Submission Checklist
+# WorldCup Bingo - Submission Checklist
 
 Track: **Consumer & Fan Experiences** (Superteam × TxODDS World Cup Hackathon)
 Live: https://worldcup-bingo.catchspider2002.workers.dev · Repo: https://github.com/catchspider2002/worldcup-bingo
@@ -18,9 +18,9 @@ Live: https://worldcup-bingo.catchspider2002.workers.dev · Repo: https://github
 
 ## ⏳ Before submitting
 
-- [ ] **Record demo video** (≤5 min) — open a card, fire `mock-event` calls, show squares checking + a bingo line + confetti; mention real auto-detection polls TxLINE every ~20s
+- [ ] **Record demo video** (≤5 min) - open a card, fire `mock-event` calls, show squares checking + a bingo line + confetti; mention real auto-detection polls TxLINE every ~20s
 - [ ] **Add the demo video link** to README + submission form
-- [ ] **Push final code to GitHub** — confirm latest commit; verify `.dev.vars` is NOT committed
+- [ ] **Push final code to GitHub** - confirm latest commit; verify `.dev.vars` is NOT committed
 - [ ] **Fill submission form**: live URL, GitHub URL, video URL, TxLINE endpoints used, API feedback
 - [ ] Attach custom domain `bingo.<domain>` (optional)
 

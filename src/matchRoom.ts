@@ -1,4 +1,4 @@
-// WorldCup Bingo — MatchRoom Durable Object.
+// WorldCup Bingo - MatchRoom Durable Object.
 // One instance per fixture. Holds the connected browsers (WebSocket) and the set of
 // already-triggered bingo categories. An alarm polls TxLINE scores every ~20s, maps the
 // state to satisfied categories, and broadcasts any newly-checked squares to all clients.
@@ -49,7 +49,7 @@ export class MatchRoom {
   async alarm(): Promise<void> {
     const fixtureId = await this.ctx.storage.get<string>('fixtureId');
     const sockets = this.ctx.getWebSockets();
-    if (!fixtureId || sockets.length === 0) return; // nobody listening — stop polling
+    if (!fixtureId || sockets.length === 0) return; // nobody listening - stop polling
 
     let finished = false;
     try {

@@ -2,9 +2,9 @@ name = "worldcup-bingo"
 main = "src/worker.ts"
 compatibility_date = "2026-01-01"
 
-# Secret (never commit) — set with:
+# Secret (never commit) - set with:
 #   wrangler secret put TXLINE_API_KEY
-# (No Claude API. No Container — real-time is handled by a Durable Object that polls
+# (No Claude API. No Container - real-time is handled by a Durable Object that polls
 #  TxLINE scores on an alarm and fan-outs to browsers over WebSocket.)
 
 # Frontend served from ./public; non-file paths (/api/*) fall through to the Worker.

@@ -1,4 +1,4 @@
-// WorldCup Bingo — TxLINE client (auth + fixtures + score state).
+// WorldCup Bingo - TxLINE client (auth + fixtures + score state).
 // Auth: every data call needs Authorization: Bearer <guest JWT> + X-Api-Token: <TXLINE_API_KEY>.
 // Documented soccer stat keys (full game): 1/2 goals, 3/4 yellows, 5/6 reds, 7/8 corners (P1/P2).
 
@@ -33,7 +33,7 @@ export interface TxFixture {
   home: string; away: string; p1IsHome: boolean;
 }
 
-// Keep ONLY the senior men's FIFA World Cup 2026 — excludes qualifiers, youth (U-17/U-20),
+// Keep ONLY the senior men's FIFA World Cup 2026 - excludes qualifiers, youth (U-17/U-20),
 // women's, Club World Cup, beach/futsal/esports, and any other edition/year.
 function isMainWorldCup(name: string): boolean {
   const s = (name || '').toLowerCase();

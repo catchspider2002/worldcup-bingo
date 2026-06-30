@@ -1,11 +1,11 @@
-# WorldCup Bingo — Live Auto-Checking Bingo Card
+# WorldCup Bingo - Live Auto-Checking Bingo Card
 ## Build Spec for Claude Code
 
 ---
 
 ## What we're building
 
-A World Cup bingo card web app where fans get a randomly generated card of match events before each game. TxLINE's real-time SSE stream auto-checks off squares the moment they happen — no manual input, no refreshing. Cards are shareable, replayable across all 104 games, and generate a score at the end of each match.
+A World Cup bingo card web app where fans get a randomly generated card of match events before each game. TxLINE's real-time SSE stream auto-checks off squares the moment they happen - no manual input, no refreshing. Cards are shareable, replayable across all 104 games, and generate a score at the end of each match.
 
 Submitted to the **Superteam × TxODDS World Cup Hackathon** under the **Fan Experiences** track.
 
@@ -47,9 +47,9 @@ worldcup-bingo/
 │   ├── eventMap.js           # Maps TxLINE events → bingo categories
 │   ├── broadcast.js          # SSE broadcaster to frontend clients
 │   └── routes/
-│       ├── card.js           # GET /card/:matchId — generate a card
-│       ├── matches.js        # GET /matches — upcoming World Cup fixtures
-│       └── events.js         # GET /events/:matchId — SSE stream to client
+│       ├── card.js           # GET /card/:matchId - generate a card
+│       ├── matches.js        # GET /matches - upcoming World Cup fixtures
+│       └── events.js         # GET /events/:matchId - SSE stream to client
 ├── frontend/
 │   ├── index.html            # Match selector / home
 │   ├── bingo.html            # Bingo card page
@@ -62,7 +62,7 @@ worldcup-bingo/
 
 ---
 
-## The bingo squares — master list
+## The bingo squares - master list
 
 25 squares total per card. Each game, 25 are drawn randomly from this pool of ~40 and shuffled into a 5×5 grid. The centre square is always FREE.
 
@@ -90,7 +90,7 @@ worldcup-bingo/
 | Hat trick | 3x `goal` same player |
 | Own goal | `own_goal` |
 | Goalkeeper save (5+ in match) | `save`, count ≥ 5 |
-| Match ends 0-0 | `full_time`, score = 0–0 |
+| Match ends 0-0 | `full_time`, score = 0-0 |
 | Comeback (losing team equalises) | score logic from event stream |
 | Free kick goal | `goal`, type = free_kick |
 
@@ -105,11 +105,11 @@ worldcup-bingo/
 | Penalty missed | `penalty_missed` |
 | Three substitutions in one half | `substitution`, count per half ≥ 3 |
 
-**Note:** Confirm exact TxLINE event type names and field structures from their docs before implementing: https://txline.txodds.com/documentation/worldcup. The names above are illustrative — adapt to whatever TxLINE actually emits.
+**Note:** Confirm exact TxLINE event type names and field structures from their docs before implementing: https://txline.txodds.com/documentation/worldcup. The names above are illustrative - adapt to whatever TxLINE actually emits.
 
 ---
 
-## Backend — detailed spec
+## Backend - detailed spec
 
 ### Environment variables (`.env`)
 
@@ -129,7 +129,7 @@ PORT=3001
 ### Event mapper (`eventMap.js`)
 
 ```js
-// Example structure — adapt field names to actual TxLINE schema
+// Example structure - adapt field names to actual TxLINE schema
 function mapEventToSquares(event) {
   const matched = []
 
@@ -164,14 +164,14 @@ Returns an array of matched category keys. Broadcaster fires all of them.
 - Returns the grid as a JSON array of 25 objects: `{ id, label, category, checked: false }`
 - Seed the randomness from `matchId + userId` (use a UUID stored in localStorage as userId) so the same user always gets the same card for the same match (prevents refresh-to-cheat)
 
-**`GET /events/:matchId`** — SSE to frontend
+**`GET /events/:matchId`** - SSE to frontend
 - Streams matched square category keys as they happen
 - Format: `data: { "categories": ["goal", "goal_first_15"], "eventDetail": "Mbappé, 12'" }\n\n`
 - Flushes all already-triggered categories on connection (for late joiners)
 
 ---
 
-## Frontend — detailed spec
+## Frontend - detailed spec
 
 ### Home page (`index.html`)
 
@@ -186,7 +186,7 @@ Returns an array of matched category keys. Broadcaster fires all of them.
 **On load:**
 1. Read `?match=MATCH_ID` from URL
 2. Get/create userId from localStorage (generate UUID if not present)
-3. Fetch card from `GET /card/:matchId` — render 5×5 grid
+3. Fetch card from `GET /card/:matchId` - render 5×5 grid
 4. Open SSE connection to `GET /events/:matchId`
 5. Show current score + match clock pulled from TxLINE (via a polling endpoint or same SSE stream)
 
@@ -198,7 +198,7 @@ Returns an array of matched category keys. Broadcaster fires all of them.
   - Bingo line: highlight all squares in the completed row/col/diagonal with a gold border
   - FREE centre: always checked, styled differently (grey/neutral)
 - Animate check: scale up briefly (1 → 1.08 → 1) + background colour transition on check
-- Show a toast notification when a square is checked: "⚽ Goal! — Mbappé, 12' — square checked!"
+- Show a toast notification when a square is checked: "⚽ Goal! - Mbappé, 12' - square checked!"
 
 **Bingo detection:**
 - Check after every square is checked
@@ -228,16 +228,16 @@ Two share options:
    - Text: `"I got [X] squares in Brazil vs France! 🟩⬜🟩⬜🟩 Play World Cup Bingo → [link] #WorldCup2026"`
    - Opens `twitter.com/intent/tweet?text=...` in a new tab
 
-2. **Image share (stretch goal — implement if time allows):**
+2. **Image share (stretch goal - implement if time allows):**
    - Use `html2canvas` (available on cdnjs) to screenshot the bingo grid
    - Download as PNG or share via Web Share API
-   - The image shows the card state with checked squares visible — naturally shareable
+   - The image shows the card state with checked squares visible - naturally shareable
 
 ---
 
 ## Visual design
 
-Keep it clean and simple — this needs to feel polished enough for non-technical fans.
+Keep it clean and simple - this needs to feel polished enough for non-technical fans.
 
 - Background: off-white (`#F9F8F6`)
 - Card grid: white cells, 1px border, 8px border radius
@@ -245,14 +245,14 @@ Keep it clean and simple — this needs to feel polished enough for non-technica
 - FREE cell: `background: #F1EFE8`, `color: #5F5E5A`
 - Bingo line highlight: `border: 2px solid #EF9F27` (amber)
 - Font: system font stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`)
-- Fully responsive — must work well on mobile (fans will use this on their phones during the match)
+- Fully responsive - must work well on mobile (fans will use this on their phones during the match)
 - Mobile layout: grid cells smaller (~60px), font size 11px, toast notifications at bottom of screen
 
 ---
 
 ## Deployment
 
-- **Backend:** Railway, Render, or Fly.io — needs persistent SSE connections, do not use standard Vercel serverless
+- **Backend:** Railway, Render, or Fly.io - needs persistent SSE connections, do not use standard Vercel serverless
 - **Frontend:** Vercel or Netlify (static)
 - Both must be publicly accessible
 
@@ -260,13 +260,13 @@ Keep it clean and simple — this needs to feel polished enough for non-technica
 
 ## Demo video plan (max 5 minutes)
 
-1. **0:00–0:30** — Open the home page, pick a live match, hit Play. Card generates instantly.
-2. **0:30–1:30** — Watch a match event come in (goal or yellow card). Show the square auto-checking in real time with the animation. Show the toast notification.
-3. **1:30–2:30** — Show the backend terminal: TxLINE event arrives → eventMap fires → SSE broadcast → frontend checks the square. Prove the full data flow live.
-4. **2:30–3:30** — Simulate a bingo line completing. Show the "BINGO!" banner + confetti. Demonstrate the share tweet being composed.
-5. **3:30–4:00** — Show the same match on two browser windows side by side — different cards (different random seeds), both getting the same squares checked at the same time.
-6. **4:00–4:30** — Show the end-of-match results panel after `full_time` fires.
-7. **4:30–5:00** — Wrap: "25 squares. 104 games. Zero manual effort. Every fan gets a different card — all powered by TxLINE."
+1. **0:00-0:30** - Open the home page, pick a live match, hit Play. Card generates instantly.
+2. **0:30-1:30** - Watch a match event come in (goal or yellow card). Show the square auto-checking in real time with the animation. Show the toast notification.
+3. **1:30-2:30** - Show the backend terminal: TxLINE event arrives → eventMap fires → SSE broadcast → frontend checks the square. Prove the full data flow live.
+4. **2:30-3:30** - Simulate a bingo line completing. Show the "BINGO!" banner + confetti. Demonstrate the share tweet being composed.
+5. **3:30-4:00** - Show the same match on two browser windows side by side - different cards (different random seeds), both getting the same squares checked at the same time.
+6. **4:00-4:30** - Show the end-of-match results panel after `full_time` fires.
+7. **4:30-5:00** - Wrap: "25 squares. 104 games. Zero manual effort. Every fan gets a different card - all powered by TxLINE."
 
 ---
 
@@ -299,8 +299,8 @@ Keep it clean and simple — this needs to feel polished enough for non-technica
 - **Seed the card generator** using `matchId + userId` so the same user always gets the same card for a given match. A simple approach: `Math.seedrandom(matchId + userId)` using the `seedrandom` npm package, then use that to shuffle the square pool.
 - **Store userId in localStorage** as a UUID. Generate on first visit. This gives consistent cards without requiring login.
 - **Replay protection:** cache all triggered category keys per match in backend memory. When a new client connects mid-match, immediately flush all already-triggered categories so their card catches up.
-- **Don't implement auth for the hackathon** — open access is fine. The Solana sign-in requirement from the brief is softer for Fan Experiences than for the Markets track ("sign up through Solana" — a simple wallet connect on the home page satisfies this).
-- **Confetti library:** `canvas-confetti` is available on cdnjs — use it for the bingo moment, it's one line of JS and judges will love it.
+- **Don't implement auth for the hackathon** - open access is fine. The Solana sign-in requirement from the brief is softer for Fan Experiences than for the Markets track ("sign up through Solana" - a simple wallet connect on the home page satisfies this).
+- **Confetti library:** `canvas-confetti` is available on cdnjs - use it for the bingo moment, it's one line of JS and judges will love it.
 - **Mobile first:** most fans will play this on their phones during the match. Test the grid at 375px width.
-- **Start with a simulated event stream** for development — create a `mockStream.js` that fires fake TxLINE events on a timer so you can develop without needing a live match.
-- The `html2canvas` image share is a stretch goal — ship the tweet share first, add image export if time allows.
+- **Start with a simulated event stream** for development - create a `mockStream.js` that fires fake TxLINE events on a timer so you can develop without needing a live match.
+- The `html2canvas` image share is a stretch goal - ship the tweet share first, add image export if time allows.

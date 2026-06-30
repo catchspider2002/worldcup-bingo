@@ -1,6 +1,6 @@
-# World Cup Bingo — Live Auto-Checking Bingo Card
+# World Cup Bingo - Live Auto-Checking Bingo Card
 
-Pick a match, get a random 5×5 bingo card, and watch squares tick off **live** as TxLINE match data comes in — no manual input, no refreshing. Submitted to the Superteam × TxODDS World Cup Hackathon — Consumer & Fan Experiences track.
+Pick a match, get a random 5×5 bingo card, and watch squares tick off **live** as TxLINE match data comes in - no manual input, no refreshing. Submitted to the Superteam × TxODDS World Cup Hackathon - Consumer & Fan Experiences track.
 
 **Stack:** Cloudflare Workers + **Durable Objects** (WebSocket fan-out + alarm polling) + static assets. **No Container, no Claude API.**
 
@@ -18,7 +18,7 @@ Pick a match, get a random 5×5 bingo card, and watch squares tick off **live** 
 - **MatchRoom Durable Object** (`src/matchRoom.ts`): one per fixture. Holds the connected browsers and the set of already-triggered categories; an alarm polls `getScoreState()` every ~20s and broadcasts newly-satisfied squares. Polling stops when no one is connected and on full time.
 - **Squares + detection** (`src/squares.ts`): seeded card generation (`fixtureId + userId`, so refresh gives the same card) and a count/phase → category mapper using the documented soccer stat keys (1/2 goals, 3/4 yellows, 5/6 reds, 7/8 corners).
 
-Auto-detected squares: goals (1/2/3/5+), yellow/red cards (incl. two reds), corners (incl. 5+), half time, full time, 0–0, extra time, penalty shootout. Other squares (penalty, VAR, own goal, minute-specific, etc.) appear on cards and can be fired with `mock-event` for the demo.
+Auto-detected squares: goals (1/2/3/5+), yellow/red cards (incl. two reds), corners (incl. 5+), half time, full time, 0-0, extra time, penalty shootout. Other squares (penalty, VAR, own goal, minute-specific, etc.) appear on cards and can be fired with `mock-event` for the demo.
 
 ---
 
@@ -48,11 +48,11 @@ Local secrets: copy `.dev.vars.example` → `.dev.vars` (gitignored) and add `TX
    ```
    Watch the squares check off in real time across any open card on that fixture. Complete a line → confetti.
 
-For a real match, the Durable Object polls TxLINE automatically while someone is watching — goals/cards/corners check off within ~20s.
+For a real match, the Durable Object polls TxLINE automatically while someone is watching - goals/cards/corners check off within ~20s.
 
 ## Notes / limitations (hackathon scope)
 
 - Real auto-detection covers count- and phase-based squares (documented stat keys); minute-specific and rare-event squares are demo/mock-driven.
-- Cards are seeded per `fixtureId + userId` (localStorage UUID) — same card on refresh, different per user.
+- Cards are seeded per `fixtureId + userId` (localStorage UUID) - same card on refresh, different per user.
 - Free World Cup tier data may be ~60s delayed (Service Level 1) or real-time (Level 12).
 - A light Solflare/Phantom/Backpack connect can be added to satisfy the Solana sign-up requirement (softer for the Fan track).

@@ -1,4 +1,4 @@
-# WorldCup Bingo — Cloudflare Deployment (as built)
+# WorldCup Bingo - Cloudflare Deployment (as built)
 
 **Track:** Consumer & Fan Experiences · **Subdomain:** `bingo.<domain>`
 **Live:** https://worldcup-bingo.catchspider2002.workers.dev
@@ -14,9 +14,9 @@ Trade-off: ~20s detection latency (alarm poll) vs. instant SSE. For a fan bingo 
 
 | Spec component | Cloudflare (shipped) |
 |---|---|
-| TxLINE consumer | **`src/txline.ts`** — guest-JWT auth (cached in DO storage) + `GET /api/fixtures/snapshot` + `GET /api/scores/snapshot/{fixtureId}`. No SSE, no Container. |
-| Event → bingo categories | **`src/squares.ts`** `categoriesFor()` — maps documented soccer stat keys (1/2 goals, 3/4 yellows, 5/6 reds, 7/8 corners) + phase to category keys |
-| Per-match clients + triggered-category cache | **`src/matchRoom.ts`** `MatchRoom` Durable Object — accepts WebSockets (hibernation), stores triggered set, ~20s alarm poll, broadcasts new squares, flushes state to late joiners, stops when idle/finished |
+| TxLINE consumer | **`src/txline.ts`** - guest-JWT auth (cached in DO storage) + `GET /api/fixtures/snapshot` + `GET /api/scores/snapshot/{fixtureId}`. No SSE, no Container. |
+| Event → bingo categories | **`src/squares.ts`** `categoriesFor()` - maps documented soccer stat keys (1/2 goals, 3/4 yellows, 5/6 reds, 7/8 corners) + phase to category keys |
+| Per-match clients + triggered-category cache | **`src/matchRoom.ts`** `MatchRoom` Durable Object - accepts WebSockets (hibernation), stores triggered set, ~20s alarm poll, broadcasts new squares, flushes state to late joiners, stops when idle/finished |
 | `GET /matches` | Worker `GET /api/matches` → `listFixtures()` |
 | `GET /card/:id` (seeded) | Worker `GET /api/card/:fixtureId?u=userId` → `generateCard()` (mulberry32, seeded by `fixtureId+userId`) |
 | `GET /events/:id` | Worker `GET /api/events/:fixtureId` → WebSocket upgrade forwarded to the fixture's Durable Object |
@@ -46,7 +46,7 @@ tag = "v1"
 new_classes = ["MatchRoom"]
 ```
 
-Secret: `TXLINE_API_KEY` only (no `ANTHROPIC_API_KEY` — no Claude; no Container; no D1).
+Secret: `TXLINE_API_KEY` only (no `ANTHROPIC_API_KEY` - no Claude; no Container; no D1).
 
 ## Deploy
 
@@ -66,7 +66,7 @@ Optional: attach `bingo.<domain>` to the Worker in the dashboard.
 
 ## Notes
 
-- Auto-detected squares are count/phase-based (goals 1/2/3/5+, yellow/red incl. two reds, corners incl. 5+, half time, full time, 0–0, extra time, penalties). Minute-specific/rare squares are demo/mock-driven.
+- Auto-detected squares are count/phase-based (goals 1/2/3/5+, yellow/red incl. two reds, corners incl. 5+, half time, full time, 0-0, extra time, penalties). Minute-specific/rare squares are demo/mock-driven.
 - DO stops polling when no clients are connected and on full time (cost-safe).
 - Same card per `fixtureId + userId`; different per user; stable on refresh.
 - A Solflare/Phantom/Backpack connect can be added on the home page for the (softer, Fan-track) Solana sign-up requirement.
