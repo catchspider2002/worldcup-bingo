@@ -15,10 +15,18 @@ async function initHome() {
   try {
     const { fixtures, note } = await api('/api/matches');
     if (note) { host.innerHTML = `<p class="muted">${esc(note)} - set it to list live fixtures. You can still open a card by fixture id: <code>/bingo.html?match=FIXTURE_ID</code>.</p>`; return; }
-    if (!fixtures.length) { host.innerHTML = '<p class="muted">No World Cup fixtures available right now.</p>'; return; }
-    fixtures.sort((a, b) => a.startTime - b.startTime);
-    host.innerHTML = fixtures.map((f) => {
-      const when = fmtTime(f.startTime);
+    // Show only live or upcoming matches - drop ones that have almost certainly finished
+    // (kicked off more than ~2h45m ago, covering 90' + ET + penalties).
+    const now = Date.now();
+    const norm = (t) => (t < 1e12 ? t * 1000 : t);
+    const shown = fixtures
+      .map((f) => ({ ...f, _ms: norm(f.startTime) }))
+      .filter((f) => f._ms >= now - 2.75 * 3600e3)
+      .sort((a, b) => a._ms - b._ms);
+    if (!shown.length) { host.innerHTML = '<p class="muted">No live or upcoming World Cup matches right now.</p>'; return; }
+    host.innerHTML = shown.map((f) => {
+      const live = f._ms <= now;
+      const when = live ? '<span class="badge live">● LIVE</span>' : fmtTime(f.startTime);
       return `<div class="fixture"><div><div class="teams">${esc(f.home)} vs ${esc(f.away)}</div>` +
         `<div class="meta">${esc(f.competition || 'World Cup')} · ${when}</div></div>` +
         `<a class="btn primary" href="/bingo.html?match=${f.fixtureId}">Play</a></div>`;

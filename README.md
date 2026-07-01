@@ -43,8 +43,9 @@ Local secrets: copy `.dev.vars.example` → `.dev.vars` (gitignored) and add `TX
 2. In another terminal, fire events at your card:
    ```bash
    BASE=https://worldcup-bingo.<sub>.workers.dev
-   curl -X POST "$BASE/api/mock-event/<fixtureId>" -H 'content-type: application/json' -d '{"category":"goal","detail":"Mbappé 12’"}'
-   curl -X POST "$BASE/api/mock-event/<fixtureId>" -H 'content-type: application/json' -d '{"category":"yellow_card"}'
+   # /api/mock-event is admin-gated - send X-Admin-Key: $ADMIN_KEY (403 otherwise)
+   curl -X POST "$BASE/api/mock-event/<fixtureId>" -H "X-Admin-Key: $ADMIN_KEY" -H 'content-type: application/json' -d '{"category":"goal","detail":"Mbappé 12’"}'
+   curl -X POST "$BASE/api/mock-event/<fixtureId>" -H "X-Admin-Key: $ADMIN_KEY" -H 'content-type: application/json' -d '{"category":"yellow_card"}'
    ```
    Watch the squares check off in real time across any open card on that fixture. Complete a line → confetti.
 

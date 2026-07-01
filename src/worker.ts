@@ -7,6 +7,7 @@ export interface Env {
   ASSETS: Fetcher;
   MATCH_ROOM: DurableObjectNamespace;
   TXLINE_API_KEY?: string;
+  ADMIN_KEY?: string;
 }
 
 const CORS = {
@@ -53,9 +54,12 @@ export default {
       m = path.match(/^\/api\/events\/(\w+)$/);
       if (m) return room(env, m[1], '/events', req);
 
-      // POST /api/mock-event/:fixtureId { category, detail } - demo driver
+      // POST /api/mock-event/:fixtureId { category, detail } - demo driver (admin only)
       m = path.match(/^\/api\/mock-event\/(\w+)$/);
-      if (m && req.method === 'POST') return room(env, m[1], '/mock', req);
+      if (m && req.method === 'POST') {
+        if (!env.ADMIN_KEY || req.headers.get('X-Admin-Key') !== env.ADMIN_KEY) return json({ error: 'forbidden' }, 403);
+        return room(env, m[1], '/mock', req);
+      }
 
       return json({ error: 'not found' }, 404);
     } catch (e) {

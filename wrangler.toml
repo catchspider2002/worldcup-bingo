@@ -2,8 +2,9 @@ name = "worldcup-bingo"
 main = "src/worker.ts"
 compatibility_date = "2026-01-01"
 
-# Secret (never commit) - set with:
+# Secrets (never commit) - set with:
 #   wrangler secret put TXLINE_API_KEY
+#   wrangler secret put ADMIN_KEY           # gates POST /api/mock-event (demo driver)
 # (No Claude API. No Container - real-time is handled by a Durable Object that polls
 #  TxLINE scores on an alarm and fan-outs to browsers over WebSocket.)
 
