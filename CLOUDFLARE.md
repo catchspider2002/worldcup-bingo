@@ -46,7 +46,7 @@ tag = "v1"
 new_classes = ["MatchRoom"]
 ```
 
-Secret: `TXLINE_API_KEY` only (no `ANTHROPIC_API_KEY` - no Claude; no Container; no D1).
+Secret: `TXLINE_API_KEY` only (no `DEEPINFRA_API_KEY` - no LLM; no Container; no D1).
 
 ## Deploy
 
